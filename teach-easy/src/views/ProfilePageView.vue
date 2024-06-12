@@ -9,7 +9,7 @@
       <p class="profile-status">TEACHER</p>
     
     <div class="button-container">
-        <button class="navigate-button" @click="goToAnotherPage">LOG OUT</button>
+        <button class="navigate-button" @click="logout">LOG OUT</button>
       </div>
     </div>
   </template>
@@ -17,6 +17,10 @@
   <script>
   import NavBar from "@/components/NavBar.vue";
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import router from "../router";
+  import { useStore } from "vuex";
+
+  const store = useStore();
 
     export default {
     components: {
@@ -26,9 +30,21 @@
   methods: {
     goToAnotherPage() {
       this.$router.push('/');
+    },
+    logout (){
+    let url = 'http://localhost:8080/api/auth/logout';
+
+    let options = {method: 'GET'};
+
+    fetch(url, options)
+        .then(res => res.json())
+        .then(json => console.log(json))
+        .catch(err => console.error('this:' + err));
+    
+    store.commit('change', false);
+    window.location.replace("/");
     }
   }
-  
 }
   </script>
   
