@@ -5,6 +5,8 @@ import LoginPage from "../views/LoginPageView.vue";
 import SignUpPage from "../views/SignUpPageView.vue";
 import ProfilePage from "../views/ProfilePageView.vue";
 import NewClass from "../views/NewClassView.vue";
+import CalendarPage from "../views/CalendarPageView.vue";
+import AdminPage from "../views/AdminPage.vue";
 
 const isAuthenticated = () => {
   
@@ -51,6 +53,18 @@ const router = createRouter(
               path:"/newclass",
               component: NewClass,
               name: "newclasspage"
+            },
+
+            {
+              path:"/calendar",
+              component: CalendarPage,
+              name: "calendarpage"
+            },
+
+            {
+              path:"/admin",
+              component: AdminPage,
+              name: "adminpage"
             },
 
            

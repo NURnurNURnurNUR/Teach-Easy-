@@ -8,9 +8,9 @@
   <div>
     <div class="navig">
       <RouterLink to="/">TEACH EASY</RouterLink>
-      <RouterLink to="/">CALENDAR</RouterLink>
-      <RouterLink to="/">PERFOMANCE</RouterLink>
-      <RouterLink to="/">ADMINISTRATION</RouterLink>
+      <RouterLink to="/calendar">CALENDAR</RouterLink>
+      <RouterLink to="/new">PERFOMANCE</RouterLink>
+      <RouterLink to="/admin">ADMINISTRATION</RouterLink>
       <RouterLink to="/profile">PROFILE</RouterLink>
      
     </div>

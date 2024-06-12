@@ -69,7 +69,7 @@ export default {
             
         },
         goToAnotherPage() {
-            this.$router.push('/login');
+            this.$router.push('/newclass');
             
         }
     },

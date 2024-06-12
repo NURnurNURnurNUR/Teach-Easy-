@@ -76,10 +76,10 @@ export default {
             }
         },
         goBackPage() {
-            this.$router.push('/');
+            this.$router.push('/new');
         },
         goToAnotherPage() {
-            this.$router.push('/login');
+            this.$router.push('/calendar');
         },
         save() {
             // Implement save functionality
