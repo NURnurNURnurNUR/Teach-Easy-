@@ -11,4 +11,6 @@ router.post("/api/create/course", platformController.course_post);
 
 router.post("/api/create/class", platformController.class_post);
 
+router.post("/api/global", platformController.create_global);
+
 module.exports = router; 

@@ -25,12 +25,11 @@
         :student-name="studentName"
         :telephone="telephone"
         :date-of-birth="dateOfBirth"
-        @save="saveStudentInformation"
       />
       <!-- Navigation buttons -->
       <div class="button-container">
         <button class="navigate-button-back" @click="goBackPage">BACK</button>
-        <button class="navigate-button-next" @click="goToAnotherPage">NEXT</button>
+        <button class="navigate-button-next" @click="save">NEXT</button>
       </div>
     </main>
   </template>
@@ -82,8 +81,21 @@ export default {
             this.$router.push('/calendar');
         },
         save() {
-            // Implement save functionality
-        },
+            let url = 'http://localhost:8080/api/create/class';
+
+            let options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.2.0'},
+            body: JSON.stringify({ "name" : this.subjectName})
+            };
+
+            fetch(url, options)
+            .then(res => res.json())
+            .then(json => console.log(json))
+            .catch(err => console.error('error:' + err));
+
+            window.location.replace("/calendar");
+        }
     },
 };
 </script>

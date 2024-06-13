@@ -16,29 +16,40 @@
       </div>
     </div>
     <div class="button">
-      <button class="save" @click="save">SAVE</button>
+      <button class="save" @click="save" type = "reset">SAVE</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    studentName: String,
-    telephone: String,
-    dateOfBirth: String,
-  },
   emits: ['update:studentName', 'update:telephone', 'update:dateOfBirth', 'save'],
   data() {
     return {
-      studentName: this.studentName || '',
-      telephone: this.telephone || '',
-      dateOfBirth: this.dateOfBirth || '',
+      studentName: this.studentName,
+      telephone: this.telephone,
+      dateOfBirth: this.dateOfBirth,
     };
   },
   methods: {
     save() {
-      this.$emit('save');
+      let url = 'http://localhost:8080/api/create/student';
+
+      let options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.2.0'},
+        body: JSON.stringify({"first_name" : this.studentName,"last_name" : this.studentName, "birthday" : this.dateOfBirth, "emergency_number" : this.telephone })
+      };
+
+  fetch(url, options)
+    .then(res => res.json())
+    .then(json => console.log(json))
+    .catch(err => console.error('error:' + err));
+
+    this.studentName = "";
+    this.dateOfBirth = "";
+    this.telephone = "";
+
     },
   },
 };

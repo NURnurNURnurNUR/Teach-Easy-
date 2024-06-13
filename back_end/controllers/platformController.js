@@ -50,3 +50,16 @@ module.exports.class_post = async (req, res) => {
         res.status(400).json(error);
     }
 };
+
+module.exports.create_global = async (req, res) => {
+    const { last_class_id } = req.body;
+    res.json(last_class_id);
+    /*
+    try {
+        
+    }
+    catch (error) {
+        console.log(error);
+    }
+        */
+}

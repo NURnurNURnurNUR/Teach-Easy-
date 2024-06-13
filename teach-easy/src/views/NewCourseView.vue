@@ -25,7 +25,7 @@
         </div>
         <div class="button-container">
             <button class="navigate-button-back" @click="goBackPage">CANCEL</button>
-            <button class="navigate-button-next" @click="goToAnotherPage">NEXT</button>
+            <button class="navigate-button-next" @click="create_subject">NEXT</button>
         </div>
     </main>
 </template>
@@ -71,6 +71,24 @@ export default {
         goToAnotherPage() {
             this.$router.push('/newclass');
             
+        },
+        create_subject () {
+            let url = 'http://localhost:8080/api/create/subject';
+
+            let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "title" : this.subjectName })
+            };
+
+            fetch(url, options)
+            .then(res => res.json())
+            .then(json => console.log(json))
+            .catch(err => console.error('error:' + err));
+
+            window.location.replace("/newclass")
         }
     },
 };

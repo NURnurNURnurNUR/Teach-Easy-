@@ -4,8 +4,7 @@
     </div>
     <div class="profile-page">
       <font-awesome-icon icon="fa-solid fa-user" class="profile-icon" />
-      <h1 class="profile-name">John Doe</h1>
-      <h2 class="profile-email">john@mail.com</h2>
+      <h1 class="profile-email"> {{ user[0].email }}</h1>
       <p class="profile-status">TEACHER</p>
     
     <div class="button-container">
@@ -13,26 +12,23 @@
       </div>
     </div>
   </template>
-  
-  <script>
-  import NavBar from "@/components/NavBar.vue";
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  import router from "../router";
-  import { useStore } from "vuex";
 
-  const store = useStore();
+<script setup>
+import NavBar from '@/components/NavBar.vue';
+import router from '@/router';
 
-    export default {
-    components: {
-      NavBar,
-      FontAwesomeIcon
-    },
-  methods: {
-    goToAnotherPage() {
-      this.$router.push('/');
-    },
-    logout (){
-    let url = 'http://localhost:8080/api/auth/logout';
+import { onBeforeMount, ref, watch } from 'vue';
+import { useStore } from 'vuex';
+
+const loading = ref(true);
+const user = ref(null);
+
+const store = useStore();
+
+const prods = ref([]);
+
+const logout = () => {
+    let url = 'http://localhost:8080/api/logout';
 
     let options = {method: 'GET'};
 
@@ -42,11 +38,46 @@
         .catch(err => console.error('this:' + err));
     
     store.commit('change', false);
-    window.location.replace("/");
-    }
-  }
-}
-  </script>
+    router.push("/");
+};
+
+const fetchUser = async () => {
+        loading.value = true;
+
+        try {
+           let url = 'http://localhost:8080/api/auth/check_user';
+
+            let options = {method: 'GET', headers: { "Content-Type" : "application/json" }};
+
+            fetch(url, options)
+            .then(res => {
+                if(res.status === 200) {
+                    router.push("/profile");
+                }
+                else {
+                window.prompt("Please, log in first");
+                router.push("/login");
+                }
+                return res.json();
+            })
+            .then(usr => {
+                user.value = usr;
+                loading.value = false;
+                console.log(usr);
+                console.log(user.value);
+                return usr;
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+};
+
+onBeforeMount(() => {
+    fetchUser();
+});
+
+</script>
   
   <style scoped>
   .profile-page {
@@ -69,7 +100,7 @@
     margin: 0.5em 0;
   }
   .profile-email {
-    font-size: 1em;
+    font-size: 1.5em;
     font-weight: bold;
     text-align: center;
   }

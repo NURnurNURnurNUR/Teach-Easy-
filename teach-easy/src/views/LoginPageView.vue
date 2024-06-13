@@ -57,6 +57,7 @@ const handle_submit = async (event) => {
             store.commit("change", true);
             console.log(user);
             router.push("/profile");
+            window.location.replace("/profile");
         }
     }
     catch(error) {

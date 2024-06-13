@@ -14,13 +14,13 @@
           <div v-for="(week, index) in calendar" :key="index" class="calendar-week">
             <div v-for="(day, idx) in week" :key="idx" class="calendar-day" @click="handleDayClick(day)">
               <div class="date">{{ day.date.toLocaleDateString('en-US', dateOptions) }}</div>
-              <div class="subject">{{ day.subject || 'No subject' }}</div>
+              <div class="subject">{{ day.subject || 'No class' }}</div>
             </div>
           </div>
         </div>
         <div v-if="selectedDate" class="modal">
           <h3>Select Subject for {{ selectedDate.date.toLocaleDateString('en-US', dateOptions) }}</h3>
-          <input type="text" v-model="selectedSubject" placeholder="Enter subject">
+          <input type="text" v-model="selectedSubject" placeholder="Enter class">
           <button @click="saveSubject">Save</button>
         </div>
       </div>

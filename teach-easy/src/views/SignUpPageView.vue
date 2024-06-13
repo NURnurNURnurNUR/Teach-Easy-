@@ -9,16 +9,16 @@
                     <h1>Sign Up</h1>
                     <p>Create the account</p>
                 </div>
-                <form>
+                <form class = "flex-column" method="post" enctype="multipart/form-data" @submit.prevent = "handle_submit">
                     <div class="form-container">
                         <div class="email-container">
                             <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" required v-model = "email_ref">
                         </div>
             
                         <div class="message-container">
                             <label for="password">Password:</label>
-                            <input type="password" id="password" name="password" required>
+                            <input type="password" id="password" name="password" required v-model = "password_ref">
                         </div>
                         <button type="submit" class="btn">Sign Up</button>
                     </div>
@@ -34,6 +34,37 @@
     <script setup>
     import NavBar from "@/components/NavBar.vue";
    
+    import router from "@/router/index";
+    import { ref } from "vue";
+    import { useStore } from "vuex";
+
+    const store = useStore();
+    const email_ref = ref("");
+    const password_ref = ref("");
+
+    const handle_submit = async (event) => {
+    try {
+        let url = 'http://localhost:8080/api/auth/signup';
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Credentials": true
+            },
+            body: JSON.stringify({ "email" : email_ref.value, "password" : password_ref.value })
+        };
+        const user = await fetch(url, options);
+        if(user.status === 201) {
+            store.commit("change", true);
+            console.log(user);
+            router.push("/profile");
+            window.location.replace("/login");
+        }
+    }
+    catch(error) {
+        console.log(error);
+    };
+};
     
     </script>
     
